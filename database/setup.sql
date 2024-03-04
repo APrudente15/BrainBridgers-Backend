@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS Lesson CASCADE;
 
 DROP TABLE IF EXISTS Subject CASCADE;
 
-DROP TABLE IF EXISTS "User" CASCADE;
+DROP TABLE IF EXISTS Student CASCADE;
 
 DROP TABLE IF EXISTS Token CASCADE;
 
@@ -14,8 +14,8 @@ CREATE TABLE Token (
     token VARCHAR(255)
 );
 
--- Create User Table
-CREATE TABLE "User" (
+-- Create Student Table
+CREATE TABLE Student (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255),
     username VARCHAR(255),
@@ -35,38 +35,28 @@ CREATE TABLE Subject (
 CREATE TABLE Lesson (
     id SERIAL PRIMARY KEY,
     -- schoolday INT, -- This will be added later as an ALTER TABLE command.
-    subject INT,
-    confidence INT CHECK (confidence IN (1, 2, 3)),
-    enjoyment INT CHECK (enjoyment IN (1, 2, 3)),
-    FOREIGN KEY (subject) REFERENCES Subject(id)
+    subject_id INT,
+    confidence INT CHECK (confidence IN (0, 1, 2, 3)),
+    enjoyment INT CHECK (enjoyment IN (0, 1, 2, 3)),
+    FOREIGN KEY (subject_id) REFERENCES Subject(id)
 );
 
 -- Create SchoolDay Table
--- We can now reference the User and Lesson tables, which have been created.
+-- We can now reference the Student and Lesson tables, which have been created.
 CREATE TABLE SchoolDay (
     id SERIAL PRIMARY KEY,
-    student INT,
+    student_id INT,
     date DATE,
-    lesson1 INT,
-    lesson2 INT,
-    lesson3 INT,
-    lesson4 INT,
-    lesson5 INT,
-    FOREIGN KEY (student) REFERENCES "User"(id),
-    FOREIGN KEY (lesson1) REFERENCES Lesson(id),
-    FOREIGN KEY (lesson2) REFERENCES Lesson(id),
-    FOREIGN KEY (lesson3) REFERENCES Lesson(id),
-    FOREIGN KEY (lesson4) REFERENCES Lesson(id),
-    FOREIGN KEY (lesson5) REFERENCES Lesson(id)
+    lesson1_id INT,
+    lesson2_id INT,
+    lesson3_id INT,
+    lesson4_id INT,
+    lesson5_id INT,
+    FOREIGN KEY (student_id) REFERENCES Student(id),
+    FOREIGN KEY (lesson1_id) REFERENCES Lesson(id),
+    FOREIGN KEY (lesson2_id) REFERENCES Lesson(id),
+    FOREIGN KEY (lesson3_id) REFERENCES Lesson(id),
+    FOREIGN KEY (lesson4_id) REFERENCES Lesson(id),
+    FOREIGN KEY (lesson5_id) REFERENCES Lesson(id)
 );
 
--- Now that the SchoolDay table has been created, we can add the schoolday foreign key to the Lesson table.
-ALTER TABLE
-    Lesson
-ADD
-    COLUMN schoolday INT;
-
-ALTER TABLE
-    Lesson
-ADD
-    FOREIGN KEY (schoolday) REFERENCES SchoolDay(id);
