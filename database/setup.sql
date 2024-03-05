@@ -19,8 +19,8 @@ CREATE TABLE Student (
 -- Create Token Table
 CREATE TABLE Token (
     id SERIAL PRIMARY KEY,
-    token VARCHAR(255),
     student_id INT,
+    token VARCHAR(255),
     FOREIGN KEY (student_id) REFERENCES Student(id)
 );
 
@@ -59,4 +59,3 @@ CREATE TABLE SchoolDay (
     FOREIGN KEY (lesson4_id) REFERENCES Lesson(id),
     FOREIGN KEY (lesson5_id) REFERENCES Lesson(id)
 );
-
