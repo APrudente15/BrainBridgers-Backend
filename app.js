@@ -30,6 +30,12 @@ app.get(
     schoolDayController.getCurrentSchoolDayForStudent
 );
 
+app.get(
+    // Get all lessons for a particular school day
+    '/schooldays/:id/lessons',
+    lessonController.getLessonsForSchoolDay
+)
+
 app.patch(
     // Update the 'confidence' score for a particular lesson
     '/lessons/:id/confidence',
