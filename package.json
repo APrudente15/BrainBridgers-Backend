@@ -26,8 +26,9 @@
   "jest": {
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "**/src/**/*.js",
+      "**/**/*.js",
       "!**/node_modules/**",
+      "!**/coverage/**",
       "!**/vendor/**"
     ],
     "coverageDirectory": "./coverage/",
