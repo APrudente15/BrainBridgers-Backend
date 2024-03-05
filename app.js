@@ -30,4 +30,10 @@ app.patch(
     lessonController.updateConfidence
 )
 
+app.patch(
+    // Update the 'enjoyment' score for a particular lesson
+    '/lessons/:id/enjoyment',
+    lessonController.updateEnjoyment
+)
+
 module.exports = app;

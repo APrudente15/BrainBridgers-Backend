@@ -22,6 +22,27 @@ class Lesson {
             throw error;
         }
     }
+
+    static async updateEnjoyment(id, enjoyment) {
+        try {
+            const query = `
+                UPDATE
+                    lesson
+                SET
+                    enjoyment = $1
+                WHERE
+                    id = $2
+                RETURNING
+                    *
+            `;
+            const values = [enjoyment, id];
+            const { rows } = await db.query(query, values);
+            return rows[0];
+        } catch (error) {
+            console.error('Error in `models/Lesson.updateEnjoyment`:', error);
+            throw error;
+        }
+    }
 }
 
 module.exports = Lesson;
