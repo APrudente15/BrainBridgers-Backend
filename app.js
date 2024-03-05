@@ -3,6 +3,7 @@ const cors = require('cors');
 const logger = require('./middleware/logger');
 
 const schoolDayController = require('./controllers/schoolDay');
+const lessonController = require('./controllers/lesson');
 
 const app = express();
 
@@ -22,5 +23,11 @@ app.get(
     '/students/:id/schooldays/current',
     schoolDayController.getCurrentSchoolDayForStudent
 );
+
+app.patch(
+    // Update the 'confidence' score for a particular lesson
+    '/lessons/:id/confidence',
+    lessonController.updateConfidence
+)
 
 module.exports = app;
