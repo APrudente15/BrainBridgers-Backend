@@ -7,7 +7,9 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "setup-db": "node ./database/setup.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "seed-db": "node ./database/seed.js",
+    "test": "jest --watchAll",
+    "test:coverage":"jest --coverage"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +22,19 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "jest": "^29.7.0",
     "nodemon": "^3.1.0"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "**/**/*.js",
+      "!**/node_modules/**",
+      "!**/coverage/**",
+      "!**/middleware/**",
+      "!**/vendor/**"
+    ],
+    "coverageDirectory": "./coverage/",
+    "testEnvironment": "node"
   }
 }
