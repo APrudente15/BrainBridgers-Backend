@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const logger = require('./middleware/logger');
 
+const studentController = require('./controllers/student');
 const schoolDayController = require('./controllers/schoolDay');
 const lessonController = require('./controllers/lesson');
 
@@ -17,6 +18,11 @@ app.get(
         res.send('Hello World');
     }
 );
+
+app.post(
+    'student/login',
+    studentController.login
+)
 
 app.get(
     // Get a student's current school day
