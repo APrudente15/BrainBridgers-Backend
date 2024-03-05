@@ -54,6 +54,25 @@ class SchoolDay {
             throw error;
         }
     }
+
+    static async getSchoolDaysForStudent(studentId) {
+        try {
+            const query = `
+                SELECT
+                    *
+                FROM
+                    schoolday
+                WHERE
+                    student_id = $1
+            `;
+            const values = [studentId];
+            const { rows } = await db.query(query, values);
+            return rows.map(row => new SchoolDay(row));
+        } catch (error) {
+            console.error('Error in `models/SchoolDay.getSchoolDaysForStudent`:', error);
+            throw error;
+        }
+    }
 }
 
 module.exports = SchoolDay;
