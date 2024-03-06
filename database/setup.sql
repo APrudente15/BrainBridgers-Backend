@@ -8,20 +8,20 @@ DROP TABLE IF EXISTS Student CASCADE;
 
 DROP TABLE IF EXISTS Token CASCADE;
 
--- Create Token Table
-CREATE TABLE Token (
-    id SERIAL PRIMARY KEY,
-    token VARCHAR(255)
-);
-
 -- Create Student Table
 CREATE TABLE Student (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255),
     username VARCHAR(255),
-    password VARCHAR(255),
-    token_id INT,
-    FOREIGN KEY (token_id) REFERENCES Token(id)
+    password VARCHAR(255)
+);
+
+-- Create Token Table
+CREATE TABLE Token (
+    id SERIAL PRIMARY KEY,
+    student_id INT,
+    token VARCHAR(255),
+    FOREIGN KEY (student_id) REFERENCES Student(id)
 );
 
 -- Create Subject Table
@@ -59,4 +59,3 @@ CREATE TABLE SchoolDay (
     FOREIGN KEY (lesson4_id) REFERENCES Lesson(id),
     FOREIGN KEY (lesson5_id) REFERENCES Lesson(id)
 );
-

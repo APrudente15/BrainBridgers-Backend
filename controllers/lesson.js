@@ -1,5 +1,25 @@
 const Lesson = require('../models/Lesson');
 
+const getLessonsForSchoolDay = async (req, res) => {
+    try {
+        const lessons = await Lesson.getLessonsForSchoolDay(req.params.id);
+        res.status(200).json({ lessons: lessons });
+    } catch (error) {
+        console.error('Error in `controllers/schoolDay.getLessonsForSchoolDay`:', error);
+        res.status(500).json({ error: error.message });
+    }
+}
+
+const getLessonsForStudent = async (req, res) => {
+    try {
+        const lessons = await Lesson.getLessonsForStudent(req.params.id);
+        res.status(200).json({ lessons: lessons });
+    } catch (error) {
+        console.error('Error in `controllers/schoolDay.getLessonsForStudent`:', error);
+        res.status(500).json({ error: error.message });
+    }
+}
+
 const updateConfidence = async (req, res) => {
     const id = parseInt(req.params.id);
     if (!Number.isInteger(id) || id <= 0) {
@@ -42,6 +62,8 @@ const updateEnjoyment = async (req, res) => {
 };
 
 module.exports = {
+    getLessonsForSchoolDay,
+    getLessonsForStudent,
     updateConfidence,
     updateEnjoyment,
 }
