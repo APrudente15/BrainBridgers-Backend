@@ -5,7 +5,7 @@ jest.mock("../../database/connect");
 
 describe("Lesson", () => {
     afterEach(() => {
-        jest.clearAllMocks();
+        jest.clearAllMocks(); 
     });
 
     describe("updateConfidence", () => {

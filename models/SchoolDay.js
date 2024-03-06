@@ -39,7 +39,7 @@ class SchoolDay {
             const query = `
                 SELECT
                     *
-                FROM
+                FROM 
                     schoolday
                 WHERE
                     student_id = $1
