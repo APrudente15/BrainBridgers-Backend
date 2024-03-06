@@ -32,7 +32,30 @@ const login = async (req, res) => {
     }
 };
 
+const getMe = async (req, res) => {
+    const token = req.headers.authorization;
+
+    if (!token) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    try {
+        const student = await Token.getStudentByToken(token);
+        // Remove the password property from the student object before sending it to the client
+        delete student.password;
+        res.status(200).json({ student: student });
+    } catch (error) {
+        console.error('Error in `controllers/student.me`:', error);
+        if (error.code === 'NO_TOKEN_FOUND') {
+            console.log('No token found');
+            return res.status(401).json({ error: 'Unauthorized' });
+        }
+        res.status(500).json({ error: error.message });
+    }
+}
+
 module.exports = {
     login,
+    getMe,
 };
 
