@@ -20,7 +20,7 @@ app.get(
 );
 
 app.post(
-    'student/login',
+    '/students/login',
     studentController.login
 )
 
