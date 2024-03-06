@@ -25,6 +25,12 @@ app.post(
 )
 
 app.get(
+    // Get a student from the auth token in the request header
+    '/students/me',
+    studentController.getMe
+)
+
+app.get(
     // Get a student's current school day
     '/students/:id/schooldays/current',
     schoolDayController.getCurrentSchoolDayForStudent

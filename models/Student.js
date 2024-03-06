@@ -31,6 +31,30 @@ class Student {
             throw error;
         }
     }
+
+    static async getOneById(id) {
+        try {
+            const query = `
+                SELECT
+                    *
+                FROM
+                    student
+                WHERE
+                    id = $1
+            `;
+            const values = [id];
+            const { rows } = await db.query(query, values);
+            if (rows.length === 0) {
+                const error = new Error('No student found');
+                error.code = 'NO_STUDENT_FOUND';
+                throw error;
+            }
+            return new Student(rows[0]);
+        } catch (error) {
+            console.error('Error in `models/Student.getOneById`:', error);
+            throw error;
+        }
+    }
 }
 
 module.exports = Student;
