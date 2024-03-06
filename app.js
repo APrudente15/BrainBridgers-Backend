@@ -20,8 +20,14 @@ app.get(
 );
 
 app.post(
-    'student/login',
+    '/students/login',
     studentController.login
+)
+
+app.get(
+    // Get a student from the auth token in the request header
+    '/students/me',
+    studentController.getMe
 )
 
 app.get(
