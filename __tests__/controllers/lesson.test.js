@@ -141,7 +141,36 @@ describe('Lesson Cotrollers', () => {
                 expect(res.status).toHaveBeenCalledWith(500);
                 expect(res.json).toHaveBeenCalledWith({ error: mockError.message });
             });
-        })
+        });
+
+        describe('getLessonsForStudent', () => {
+            it('should return lessons for a student', async () => {
+                const req = { params: { id: 1 } };
+                const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+                const mockLessons = [{ id: 1, subject: 'Maths' }];
+                Lesson.getLessonsForStudent.mockResolvedValueOnce(mockLessons);
+        
+                await getLessonsForStudent(req, res);
+        
+                expect(Lesson.getLessonsForStudent).toHaveBeenCalledWith(req.params.id);
+                expect(res.status).toHaveBeenCalledWith(200);
+                expect(res.json).toHaveBeenCalledWith({ lessons: mockLessons });
+            });
+        
+            it('should handle errors', async () => {
+                const req = { params: { id: 1 } };
+                const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+                const mockError = new Error('Database query failed');
+                Lesson.getLessonsForStudent.mockRejectedValueOnce(mockError);
+        
+                await getLessonsForStudent(req, res);
+        
+                expect(Lesson.getLessonsForStudent).toHaveBeenCalledWith(req.params.id);
+                expect(res.status).toHaveBeenCalledWith(500);
+                expect(res.json).toHaveBeenCalledWith({ error: mockError.message });
+            });
+        });
+        
     
     });
 
