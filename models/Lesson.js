@@ -12,7 +12,7 @@ class Lesson {
         this.id = id;
         this.subjectId = subject_id;
         this.confidence = confidence;
-        this.enjoyment = enjoyment;
+        this.enjoyment = enjoyment; 
         this.subjectName = subject_name;
     }
 
