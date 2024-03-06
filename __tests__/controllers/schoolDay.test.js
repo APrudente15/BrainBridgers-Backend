@@ -26,7 +26,7 @@ describe('getCurrentSchoolDayForStudent', () => {
 
         expect(SchoolDay.getCurrentSchoolDayForStudent).toHaveBeenCalledWith(req.params.id);
         expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.json).toHaveBeenCalledWith(mockSchoolDay);
+        expect(res.json).toHaveBeenCalledWith({ schoolDay: mockSchoolDay });
     });
 
     it('should return 500 and error message when an error occurs', async () => {

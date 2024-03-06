@@ -113,4 +113,5 @@ describe('updateEnjoyment', () => {
         expect(res.status).toHaveBeenCalledWith(500);
         expect(res.json).toHaveBeenCalledWith({ error: mockError.message });
     });
+
 });
