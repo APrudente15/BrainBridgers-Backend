@@ -16,7 +16,7 @@ describe("SchoolDay", () => {
         const studentId = 1;
         const result = await SchoolDay.getCurrentSchoolDayForStudent(studentId);
 
-        expect(result).toEqual(mockRows[0]);
+        expect(result).toEqual(new SchoolDay(mockRows[0]));
         expect(db.query).toHaveBeenCalledWith(
           expect.any(String),
           expect.arrayContaining([studentId])
