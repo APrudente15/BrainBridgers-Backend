@@ -1,5 +1,6 @@
 const db = require("../../database/connect");
 const Lesson = require("../../models/Lesson");
+const SchoolDay = require("../../models/SchoolDay");
 
 jest.mock("../../database/connect");
 
@@ -55,4 +56,55 @@ describe("Lesson", () => {
             expect(db.query).toHaveBeenCalledWith(expect.any(String), [3, 1]);
         });
     });
+
+    describe("getLessonsForSchoolDay", () => {
+        it("should fetch lessons for a given school day ID", async () => {
+            const mockSchoolDayId = 1;
+            const mockSchoolDay = {
+                lesson1_id: 1,
+                lesson2_id: 2,
+                lesson3_id: 3,
+                lesson4_id: 4,
+                lesson5_id: 5
+            };
+
+            const mockLessons = [
+                { id: 1, subject_id: 1, confidence: 3, enjoyment: 4, subject_name: "Math" },
+                { id: 2, subject_id: 2, confidence: 4, enjoyment: 5, subject_name: "Science" },
+                { id: 3, subject_id: 3, confidence: 2, enjoyment: 3, subject_name: "English" },
+                { id: 4, subject_id: 4, confidence: 5, enjoyment: 2, subject_name: "History" },
+                { id: 5, subject_id: 5, confidence: 3, enjoyment: 4, subject_name: "Geography" }
+            ];
+
+            db.query.mockResolvedValueOnce({ rows: mockLessons });
+
+            SchoolDay.getOneById = jest.fn().mockResolvedValue(mockSchoolDay);
+
+            const fetchedLessons = await Lesson.getLessonsForSchoolDay(mockSchoolDayId);
+
+            expect(SchoolDay.getOneById).toHaveBeenCalledWith(mockSchoolDayId);
+            expect(db.query).toHaveBeenCalledWith(expect.any(String), [
+                mockSchoolDay.lesson1_id,
+                mockSchoolDay.lesson2_id,
+                mockSchoolDay.lesson3_id,
+                mockSchoolDay.lesson4_id,
+                mockSchoolDay.lesson5_id
+            ]);
+            expect(fetchedLessons).toEqual(mockLessons.map(lesson => new Lesson(lesson)));
+        });
+
+        it("should throw an error if fetching lessons for a school day fails", async () => {
+            const mockSchoolDayId = 1;
+            const mockError = new Error("Database query failed");
+
+            SchoolDay.getOneById = jest.fn().mockRejectedValue(mockError);
+
+            await expect(Lesson.getLessonsForSchoolDay(mockSchoolDayId)).rejects.toThrow(mockError);
+
+            expect(SchoolDay.getOneById).toHaveBeenCalledWith(mockSchoolDayId);
+
+            expect(db.query).not.toHaveBeenCalled();
+        });
+    });
+
 });

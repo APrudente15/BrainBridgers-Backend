@@ -5,7 +5,7 @@ class Lesson {
     constructor({
         id,
         subject_id,
-        confidence,
+        confidence, 
         enjoyment,
         subject_name = null  // Could be refactored as a view-model, but in the interest of time ... 
     }) {
