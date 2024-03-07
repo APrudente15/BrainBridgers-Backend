@@ -4,10 +4,12 @@ const db = require('../../database/connect');
 jest.mock('../../database/connect')
 
 describe("SchoolDay", () => {
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
     describe("getCurrentSchoolDayForStudent", () => {
-      afterEach(() => {
-        jest.clearAllMocks();
-      });
   
       it("should return the current school day for a student", async () => {
         const mockRows = [{ id: 1, date: new Date(), lesson1_id: "Maths"}];
@@ -16,7 +18,7 @@ describe("SchoolDay", () => {
         const studentId = 1;
         const result = await SchoolDay.getCurrentSchoolDayForStudent(studentId);
 
-        expect(result).toEqual(mockRows[0]);
+        expect(result).toEqual(new SchoolDay(mockRows[0]));
         expect(db.query).toHaveBeenCalledWith(
           expect.any(String),
           expect.arrayContaining([studentId])
@@ -36,4 +38,66 @@ describe("SchoolDay", () => {
         );
       });
     });
+
+    describe("getOneById", () => {
+
+      it("should return a school day by ID", async () => {
+          const mockId = 1;
+          const mockSchoolDay = {
+              id: mockId,
+              student_id: 1,
+              date: new Date(),
+              lesson1_id: "Math",
+              lesson2_id: "Science",
+              lesson3_id: "History",
+              lesson4_id: "English",
+              lesson5_id: "Geography"
+          };
+
+          db.query.mockResolvedValueOnce({ rows: [mockSchoolDay] });
+
+          const result = await SchoolDay.getOneById(mockId);
+
+          expect(result).toEqual(new SchoolDay(mockSchoolDay));
+          expect(db.query).toHaveBeenCalled();
+      });
+
+    it("should throw an error if database query fails", async () => {
+        const mockId = 3;
+        const mockError = new Error("Database query failed");
+        db.query.mockRejectedValueOnce(mockError);
+        await expect(SchoolDay.getOneById(mockId)).rejects.toThrowError(mockError);
+        expect(db.query).toHaveBeenCalled();
+    }); 
+  });
+
+  describe("getSchoolDaysForStudent", () => {
+
+    it("should return school days for a student", async () => {
+      const mockRows = [
+        { id: 1, date: new Date(), student_id: 1 },
+        { id: 2, date: new Date(), student_id: 1 }
+      ];
+      db.query.mockResolvedValueOnce({ rows: mockRows });
+
+      const studentId = 1;
+      const result = await SchoolDay.getSchoolDaysForStudent(studentId);
+
+      expect(result).toHaveLength(mockRows.length);
+      expect(result[0]).toEqual(new SchoolDay(mockRows[0]));
+      expect(result[1]).toEqual(new SchoolDay(mockRows[1]));
+      expect(db.query).toHaveBeenCalledWith(expect.any(String), [studentId]);
+    });
+
+    it("should throw an error when database query fails", async () => {
+      const mockError = new Error("Database query failed");
+      db.query.mockRejectedValueOnce(mockError);
+
+      const studentId = 1;
+      await expect(SchoolDay.getSchoolDaysForStudent(studentId)).rejects.toThrowError(mockError);
+
+      expect(db.query).toHaveBeenCalledWith(expect.any(String), [studentId]);
+    });
+  });
+
   });
