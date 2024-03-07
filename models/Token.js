@@ -10,7 +10,7 @@ class Token {
     }
 
     static async create(studentId) {
-        const token = uuid();
+        const token = uuid(); 
         try {
             const query = `
                 INSERT INTO

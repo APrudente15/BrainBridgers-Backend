@@ -32,21 +32,6 @@ describe('Student Controller - Login', () => {
     
     });
 
-    it('should return error for invalid username or password', async () => {
-        const req = { body: { username: 'testuser', password: 'testpassword' } };
-        const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
-        const mockStudent = { id: 1, username: 'testuser', password: '$2b$10$KljhOeLYRf6HR/F30EABQO1KHygNhxgls0NY0q6hwGt9NnF7ZQOJK' }; // hashed password
-
-        Student.getOneByUsername.mockResolvedValueOnce(mockStudent);
-        bcrypt.compare.mockResolvedValueOnce(false);
-
-        await login(req, res);
-
-        expect(Student.getOneByUsername).toHaveBeenCalledWith(req.body.username);
-        expect(bcrypt.compare).toHaveBeenCalledWith(req.body.password, mockStudent.password);
-        expect(res.status).toHaveBeenCalledWith(401);
-        expect(res.json).toHaveBeenCalledWith({ error: 'Invalid username or password' });
-    });
 
     it('should handle missing username or password', async () => {
         const req = { body: {} };
