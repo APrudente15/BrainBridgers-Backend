@@ -28,6 +28,8 @@ class Lesson {
                     subject ON lesson.subject_id = subject.id
                 WHERE
                     lesson.id IN ($1, $2, $3, $4, $5)
+                ORDER BY
+                    lesson.id ASC
             `;
             const values = [
                 schoolDay.lesson1_id,
