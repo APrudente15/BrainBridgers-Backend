@@ -63,14 +63,15 @@ VALUES
   (2, 3, 1),
 
   -- Thursday, week 1
-  (3, 1, 2),
-  (4, 2, 2),
-  (5, 3, 1),
-  (6, 1, 2),
-  (7, 2, 2),
+    -- This is the day of the demo recording, so `Lesson.enjoyment` & `Lesson.confidence` initialised at 0
+  (3, 0, 0),
+  (4, 0, 0),
+  (5, 0, 0),
+  (6, 0, 0),
+  (7, 0, 0),
 
   -- Friday, week 1
-  -- This is the day of the demo, so `Lesson.enjoyment` & `Lesson.confidence` initialised at 0
+  -- This is the day of the actual demo, so `Lesson.enjoyment` & `Lesson.confidence` initialised at 0
   (8, 0, 0),
   (9, 0, 0),
   (10, 0, 0),
