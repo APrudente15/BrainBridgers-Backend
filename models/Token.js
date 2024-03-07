@@ -29,6 +29,31 @@ class Token {
         }
     }
 
+    static async getOneByToken(token) {
+        try {
+            const query = `
+                SELECT
+                    *
+                FROM
+                    token
+                WHERE
+                    token = $1
+            `;
+            const values = [token];
+            const { rows } = await db.query(query, values);
+            if (rows.length === 0) {
+                const error = new Error('No token found');
+                error.code = 'NO_TOKEN_FOUND';
+                throw error;
+            }
+            return new Token(rows[0]);
+        }
+        catch (error) {
+            console.error('Error in `models/Token.getOneByToken`:', error);
+            throw error;
+        }
+    }
+
     static async getStudentByToken(token) {
         try {
             const query = `
