@@ -42,11 +42,11 @@ INSERT INTO
 VALUES
 -- Should be 100 in total
 -- Monday, week 1
-  (1, 3, 2),
-  (2, 2, 1),
-  (3, 3, 1),
-  (4, 1, 2), 
-  (5, 3, 1),
+  (1, 0, 0),
+  (2, 0, 0),
+  (3, 0, 0),
+  (4, 0, 0), 
+  (5, 0, 0),
 
   -- Tuesday, week 1
   (6,  2, 3),
@@ -63,20 +63,18 @@ VALUES
   (2, 3, 1),
 
   -- Thursday, week 1
-    -- This is the day of the demo recording, so `Lesson.enjoyment` & `Lesson.confidence` initialised at 0
-  (3, 0, 0),
-  (4, 0, 0),
-  (5, 0, 0),
-  (6, 0, 0),
-  (7, 0, 0),
+  (3, 1, 2),
+  (4, 2, 1),
+  (5, 1, 2),
+  (6, 2, 1),
+  (7, 2, 2),
 
   -- Friday, week 1
-  -- This is the day of the actual demo, so `Lesson.enjoyment` & `Lesson.confidence` initialised at 0
-  (8, 0, 0),
-  (9, 0, 0),
-  (10, 0, 0),
-  (11, 0, 0),
-  (12, 0, 0),
+  (8, 1, 2),
+  (9, 3, 1),
+  (10, 2, 2),
+  (11, 1, 2),
+  (12, 2, 3),
 
   -- Rest of the data continues
   (13, 2, 3),
