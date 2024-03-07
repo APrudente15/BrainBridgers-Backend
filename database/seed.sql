@@ -159,7 +159,7 @@ VALUES
 INSERT INTO
   Student (name, username, password)
 VALUES
-  ('Lilly Savage', 'Lillypad58', '$2b$10$UvzgBXWN5/qDN9lujLtpcet72VjOuWgcJ0zMDkFK37OypfTWsJHEa');
+  ('Gabriella Guthrie', 'gabz_loves_maths', '$2b$10$UvzgBXWN5/qDN9lujLtpcet72VjOuWgcJ0zMDkFK37OypfTWsJHEa');
 
 INSERT INTO
   SchoolDay (
